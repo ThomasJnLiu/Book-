@@ -62,13 +62,13 @@ function preload() {
 function setup() 
 {
   
-  createCanvas(1200,900);
+  createCanvas(1400,700);
   xa = 0;
   ya = 0;
   xb = 0;
   yb = 0;
   
-  coord1 = createVector(width-img1.width/2,height-img1.height/2,0);
+  coord1 = createVector(0,0,0);
   coord2 = createVector(img2.width/2,img2.height/2,0);
   
   
