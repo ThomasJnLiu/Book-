@@ -34,6 +34,8 @@ let coord1; //img1's starting coords
 let img2; //bathtub, toilet, sink
 let coord2; //img2's starting coords
 
+let moveDistance = 25; // how far to move per press
+
 
 let img3; //combined, with 1 of the frames covering a corner of the bath tub
 let coord3;
@@ -110,15 +112,15 @@ function draw()
    x22 = coord2.x+xb; //img2's starting coords + x movement
    y22 = coord2.x+yb; //img2's starting coords + y movement
 
-    let distance = int(dist(x11,y11,x22,y22));
+    /*let distance = int(dist(x11,y11,x22,y22));
     print(distance);
 
-  if(distance>howfar) { //if distance is less than accuracy, move
+  if(distance>howfar) { //if distance is less than accuracy, move*/
     image(img1,x11,y11);
     image(img2,x22,y22); 
-  } else{ //if distance is less than accuracy, combine
+  /*} else{ //if distance is less than accuracy, combine
     image(img3,(x11+x22)/2,(y11+y22)/2);
-  }
+  }*/
 
   text('Are you player 1 or 2? (Please only put "1" or "2")', 5, height-5);
   text('Try to get the two images to overlap and snap together!', 5, 15);
@@ -137,26 +139,26 @@ function readIncoming(inMessage) //when new data comes in it triggers this funct
   let sentKey = inMessage.message.messageText;
 
      if (sentKey === 'a' && playerwho === '1') {
-      xa += -25;
+      xa += moveDistance*-1;
     } else
     if (sentKey === 'd' && playerwho === '1')  {
-      xa += 25;
+      xa += moveDistance;
     } else
     if (sentKey === 'w' && playerwho === '1')  {
-      ya += -25;
+      ya += moveDistance*-1;
     } else
     if (sentKey === 's' && playerwho === '1') {
-      ya += 25;
+      ya += moveDistance;
     } 
 
     if (sentKey === 'a' && playerwho === '2') {
-      xb += -25;
+      xb += moveDistance*-1;
     } else
     if (sentKey === 'd' && playerwho === '2') {
-      xb += 25;
+      xb += moveDistance;
     } else
     if (sentKey === 'w' && playerwho === '2')  {
-      yb += -25;
+      yb += moveDistance*-1;
     } else
     if (sentKey === 's' && playerwho === '2') {
       yb += 25;
