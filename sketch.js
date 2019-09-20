@@ -107,6 +107,18 @@ function setup()
 function draw() 
 {
   background(255);
+
+  if (keyIsPressed === true) {dataServer.publish(
+    {
+      channel: channelName,
+      message: 
+      {
+        who: whoAreYou.value(),
+        messageText: key
+
+      }
+    });}
+
    x11 = coord1.x+xa; //img1's starting coords + x movement
    y11 = coord1.x+ya; //img1's starting coords + y movement
    x22 = coord2.x+xb; //img2's starting coords + x movement
@@ -178,7 +190,7 @@ function readIncoming(inMessage) //when new data comes in it triggers this funct
   }
 }
 
-function keyPressed() { //use key press to publish message
+/*function keyPressed() { //use key press to publish message
   
   dataServer.publish(
     {
@@ -191,7 +203,7 @@ function keyPressed() { //use key press to publish message
       }
     });
 
-}
+}/*
 
 ///uses built in mouseClicked function to send the data to the pubnub server
 /*function sendTheMessage() {
