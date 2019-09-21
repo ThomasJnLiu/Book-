@@ -86,8 +86,8 @@ function setup()
   });
   
   //attach callbacks to the pubnub object to handle messages and connections
-  dataServer.addListener({ message: readIncoming });
-  dataServer.subscribe({channels: [channelName]});
+  dataServer.addListener({message: readIncoming, presence: presenceChange});
+  dataServer.subscribe({channels: [channelName], withPresence: true});
 
   //create the text fields for the message to be sent
   whoAreYou = createInput('Please enter either 1 or 2');
@@ -190,6 +190,10 @@ function readIncoming(inMessage) //when new data comes in it triggers this funct
   }
 }
 
+function presenceChange(pInfo){
+  console.log(pInfo.occupancy);
+  totalPopulation = pInfo.occupancy;
+}
 /*function keyPressed() { //use key press to publish message
   
   dataServer.publish(
