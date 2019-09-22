@@ -3,6 +3,11 @@ IMPORTANT
 For best performance
   - have everyone join at once
   - no one should join and then attempt to rejoin after everyone has joined
+  - for testing purposes. if users decides to leave, they must press the unsub
+    button before closing the window
+  - reason because pubnub doesn't fire a 'leave' presence event when a user closes
+    their window, it'll simply wait 5 minutes and then time them out
+  - unsub button allows for immediate leaving, so testing can be done quicker
 ------------------------------------------*/
 
 
