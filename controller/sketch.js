@@ -1,3 +1,11 @@
+/*------------------------------------------
+IMPORTANT
+For best performance
+  - have everyone join at once
+  - no one should join and then attempt to rejoin after everyone has joined
+------------------------------------------*/
+
+
 let dataServer;
 let pubKey = 'pub-c-59079f0e-c013-49d8-80f9-5d609b16fee0';
 let subKey = 'sub-c-4d640c3e-d831-11e9-85e7-eae1db32c94a';
@@ -7,7 +15,8 @@ let channelName = "whoSaysStuff";
 /*variable for identifying users
 1 is the main file, 2-4 are players, 0 is for spectators when there are more than 4 users subscribed.*/
 let playerNum;
-//universally unique identifier, used to differentiate users
+//for checking is user is unsubbed to channel, prevents further publishing
+let unSubbed = false;
 
 function setup(){
   
@@ -15,7 +24,7 @@ function setup(){
 
    // initialize pubnub
   dataServer = new PubNub({
-    publish_key   : pubKey,  //get these from the pubnub account online
+    publish_key   : pubKey,  
     subscribe_key : subKey,  
     ssl: true  //enables a secure connection. This option has to be used if using the OCAD webspace
   });
@@ -24,13 +33,13 @@ function setup(){
   dataServer.subscribe({channels: [channelName], withPresence: true});
 }
 
-function readIncoming(inMessage) //when new data comes in it triggers this function, 
-{ 
-
+function readIncoming(inMessage){ //when new data comes in it triggers this function, 
+ 
 }
 
 function draw(){
-  if(keyIsPressed == true){
+  //publish key and player number if still subbed to channel
+  if(keyIsPressed == true && !unSubbed){
     console.log(key);
     dataServer.publish({
       channel: channelName,
@@ -64,7 +73,14 @@ function presenceChange(pInfo){
       }
       console.log('user number is ' + playerNum);
     }
-
 }
 
-
+//unsub to channel if button clicked
+$('document').ready(function(){
+  $('.unSubButton').on('click', function(){
+    dataServer.unsubscribe({
+      channels: [channelName]
+    });
+    unSubbed = true;
+  });
+});

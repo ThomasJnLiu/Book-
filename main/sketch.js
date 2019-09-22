@@ -82,6 +82,7 @@ function setup()
   {
     publish_key   : pubKey,  //get these from the pubnub account online
     subscribe_key : subKey,  
+    heartbeatInterval: 10,
     ssl: true  //enables a secure connection. This option has to be used if using the OCAD webspace
   });
   
@@ -192,6 +193,7 @@ function readIncoming(inMessage) //when new data comes in it triggers this funct
   }
 }
 
+//debug for seeing users join and leave
 function presenceChange(pInfo){
   switch(pInfo.action){
     case 'join':
@@ -199,33 +201,18 @@ function presenceChange(pInfo){
       console.log('total number of people in the channel is ' + pInfo.occupancy);
       break;
     case 'leave':
-      console.log('user' + pInfo.occupancy + 'has left');
+      //find out how to convert pInfo.occupancy to int
+      console.log('user ' + pInfo.occupancy + ' + 1 has left');
       console.log('total number of people in the channel is ' + pInfo.occupancy);
       break;
     case 'timeout':
-      console.log('user' + pInfo.occupancy + ' has timed out');
+      console.log('user ' + pInfo.occupancy + ' has timed out');
       console.log('total number of people in the channel is ' + pInfo.occupancy);
     default:
       break;
   }
-  /*console.log(pInfo);
-  console.log(pInfo.occupancy);*/
   totalPopulation = pInfo.occupancy;
 }
-/*function keyPressed() { //use key press to publish message
-  
-  dataServer.publish(
-    {
-      channel: channelName,
-      message: 
-      {
-        who: whoAreYou.value(),
-        messageText: key
-
-      }
-    });
-
-}/*
 
 ///uses built in mouseClicked function to send the data to the pubnub server
 /*function sendTheMessage() {
