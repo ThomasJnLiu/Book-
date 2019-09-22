@@ -27,6 +27,16 @@ function setup()
   //attach callbacks to the pubnub object to handle messages and connections
   dataServer.addListener({message: readIncoming, presence: presenceChange});
   dataServer.subscribe({channels: [channelName], withPresence: true});
+
+  //publish UUID for main file to record
+  /*dataServer.publish({
+    channel: channelName,
+    message:
+    {
+      player: playerNum,
+      ID: newUUID
+    }
+  });*/
 }
 
 function presenceChange(pInfo){
@@ -34,21 +44,24 @@ function presenceChange(pInfo){
     totalPopulation = pInfo.occupancy;
 
     //determine player number based on # of users subscribed
-    switch(pInfo.occupancy){
-      case 2:
-        playerNum = 1;
-        break;
-      case 3: 
-        playerNum = 2;
-        break;
-      case 4:
-        playerNum = 3;
-        break;
-      default:
-        playerNum = 0;
-        break;
+    if(playerNum == undefined){
+      switch(pInfo.occupancy){
+        case 2:
+          playerNum = 1;
+          break;
+        case 3: 
+          playerNum = 2;
+          break;
+        case 4:
+          playerNum = 3;
+          break;
+        default:
+          playerNum = 0;
+          break;     
+      }
+      console.log('player number is ' + playerNum);
     }
-    //console.log('player number is ' + playerNum);
+
 }
 
   function readIncoming(inMessage) //when new data comes in it triggers this function, 
