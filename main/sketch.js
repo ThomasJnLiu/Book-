@@ -142,8 +142,8 @@ function draw()
 
 function readIncoming(inMessage) //when new data comes in it triggers this function, 
 {                               // this works becsuse we subscribed to the channel in setup()
-  /*console.log('player is ' + inMessage.message.player);
-  console.log('ID is ' + inMessage.message.ID);*/
+  //logs which player pressed which button for debug purposes
+  console.log('player number ' + inMessage.message.player + ' pressed ' + inMessage.message.pressedKey);
   // simple error check to match the incoming to the channelName
   if(inMessage.channel == channelName)
   {
@@ -193,7 +193,23 @@ function readIncoming(inMessage) //when new data comes in it triggers this funct
 }
 
 function presenceChange(pInfo){
-  console.log(pInfo.occupancy);
+  switch(pInfo.action){
+    case 'join':
+      console.log('user ' + pInfo.occupancy + ' has joined');
+      console.log('total number of people in the channel is ' + pInfo.occupancy);
+      break;
+    case 'leave':
+      console.log('user' + pInfo.occupancy + 'has left');
+      console.log('total number of people in the channel is ' + pInfo.occupancy);
+      break;
+    case 'timeout':
+      console.log('user' + pInfo.occupancy + ' has timed out');
+      console.log('total number of people in the channel is ' + pInfo.occupancy);
+    default:
+      break;
+  }
+  /*console.log(pInfo);
+  console.log(pInfo.occupancy);*/
   totalPopulation = pInfo.occupancy;
 }
 /*function keyPressed() { //use key press to publish message
