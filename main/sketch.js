@@ -108,6 +108,7 @@ function draw()
 {
   background(255);
 
+  /*
   if (keyIsPressed === true) {dataServer.publish(
     {
       channel: channelName,
@@ -117,7 +118,7 @@ function draw()
         messageText: key
 
       }
-    });}
+    });}*/
 
    x11 = coord1.x+xa; //img1's starting coords + x movement
    y11 = coord1.x+ya; //img1's starting coords + y movement
@@ -141,7 +142,8 @@ function draw()
 
 function readIncoming(inMessage) //when new data comes in it triggers this function, 
 {                               // this works becsuse we subscribed to the channel in setup()
-  
+  /*console.log('player is ' + inMessage.message.player);
+  console.log('ID is ' + inMessage.message.ID);*/
   // simple error check to match the incoming to the channelName
   if(inMessage.channel == channelName)
   {
