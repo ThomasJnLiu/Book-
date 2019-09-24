@@ -42,6 +42,8 @@ let moveDistance = 25; // how far to move per press
 let presenceChange //needed to get rid of an error....but if i un-comment it out, nothing works
 let playerwho;
 
+let bg;
+
 let xa; //move img1 on x axis
 let ya; //move img1 on y axis
 let xb; //move img2 on x axis
@@ -63,6 +65,14 @@ function preload() {
   img1 = loadImage('https://i.imgur.com/7Q8Cdcj.png');
   img2 = loadImage('https://i.imgur.com/IIWqHnx.png');
   img3 = loadImage('https://i.imgur.com/aTNnS2H.png');
+
+  /*
+  img1 = loadImage('../images/1.png'); //toilet
+  img2 = loadImage('../images/2.png'); //sink
+  img3 = loadImage('../images/3.png'); //bathtub
+  bg = loadImage('../images/0.png')
+  */
+
 }
 
 function setup() 
