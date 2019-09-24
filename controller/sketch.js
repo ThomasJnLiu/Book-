@@ -12,8 +12,8 @@ For best performance
 
 
 let dataServer;
-let pubKey = 'pub-c-59079f0e-c013-49d8-80f9-5d609b16fee0';
-let subKey = 'sub-c-4d640c3e-d831-11e9-85e7-eae1db32c94a';
+let pubKey = 'pub-c-73ed22b4-0625-47d8-8e2a-baa53b5d0f2e';
+let subKey = 'sub-c-4b2eb5a6-d5af-11e9-87c7-92ba2ff8bd78';
 
 let channelName = "whoSaysStuff";
 
