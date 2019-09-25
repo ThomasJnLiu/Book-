@@ -8,10 +8,9 @@ slide 2 images around and then combine once they're close enough to each other
 //get these keys from your PubNub account
 //within your group, you will use 1 of your accounts for the project
 
-
 let dataServer;
-let pubKey = 'pub-c-59079f0e-c013-49d8-80f9-5d609b16fee0';
-let subKey = 'sub-c-4d640c3e-d831-11e9-85e7-eae1db32c94a';
+let pubKey = 'pub-c-73ed22b4-0625-47d8-8e2a-baa53b5d0f2e';
+let subKey = 'sub-c-4b2eb5a6-d5af-11e9-87c7-92ba2ff8bd78';
 
 //input variables
 let sendText;
@@ -39,7 +38,6 @@ let coord3;
 
 let moveDistance = 25; // how far to move per press
 
-let presenceChange //needed to get rid of an error....but if i un-comment it out, nothing works
 let playerwho;
 
 let bg;
@@ -62,9 +60,9 @@ let y22; //img2's starting coords + y movement
 let howfar = 15; //how close should images be before combining
 
 function preload() {
-  img1 = loadImage('https://i.imgur.com/7Q8Cdcj.png');
-  img2 = loadImage('https://i.imgur.com/IIWqHnx.png');
-  img3 = loadImage('https://i.imgur.com/aTNnS2H.png');
+  img1 = loadImage('https://i.imgur.com/ulG65nN.png');
+  img2 = loadImage('https://i.imgur.com/tLWJ6X2.png');
+  img3 = loadImage('https://i.imgur.com/tUkk790.png');
 
   /*
   img1 = loadImage('../images/1.png'); //toilet
@@ -126,32 +124,19 @@ function draw()
 {
   background(255);
 
-  /*
-  if (keyIsPressed === true) {dataServer.publish(
-    {
-      channel: channelName,
-      message: 
-      {
-        who: whoAreYou.value(),
-        messageText: key
-
-      }
-    });}*/
-
-
    x11 = coord1.x+xa; //img1's starting coords + x movement
    y11 = coord1.y+ya; //img1's starting coords + y movement
    x22 = coord2.x+xb; //img2's starting coords + x movement
    y22 = coord2.y+yb; //img2's starting coords + y movement
    x33 = coord3.x+xc; //img2's starting coords + x movement
    y33 = coord3.y+yc; //img2's starting coords + y movement
-    /*let distance = int(dist(x11,y11,x22,y22));
-    print(distance);
+  image(img1,x11,y11); 
+  image(img2,x22,y22); 
+  image(img3,x33,y33); 
+ // if(distance>howfar) { //if distance is less than accuracy, move*/
 
-  if(distance>howfar) { //if distance is less than accuracy, move*/
-    image(img1,x11,y11);
-    image(img2,x22,y22); 
-    image(img3,x33,y33); 
+    //image(img2,x22,y22); 
+    //image(img3,x33,y33); 
   /*} else{ //if distance is less than accuracy, combine
     image(img3,(x11+x22)/2,(y11+y22)/2);
   }*/
@@ -167,13 +152,73 @@ function readIncoming(inMessage) //when new data comes in it triggers this funct
   //logs which player pressed which button for debug purposes
   console.log('player number ' + inMessage.message.player + ' pressed ' + inMessage.message.pressedKey);
   // simple error check to match the incoming to the channelName
-  if(inMessage.channel == channelName)
-  {
-
-
   let playerNum = inMessage.message.player; //hold inmessage.who
   let sentKey = inMessage.message.pressedKey;
 
+  switch(playerNum){
+    case 2:
+      console.log('player2');
+      switch(sentKey){
+        case 'a':
+          xa = xa-moveDistance;
+          break;
+        case 's':
+            ya = ya+moveDistance;
+          break;
+        case 'd':
+            xa = xa+moveDistance; 
+          break;
+        case 'w':
+          ya = ya-moveDistance;
+          break;
+        default:
+          break;
+      }
+      break;
+
+    case 3:
+        switch(sentKey){
+          case 'a':
+            xb = xb-moveDistance;
+            break;
+          case 's':
+              yb = yb+moveDistance;
+            break;
+          case 'd':
+              xb = xb+moveDistance; 
+            break;
+          case 'w':
+            yb = yb-moveDistance;
+            break;
+          default:
+            break;
+        }
+        break;
+
+    case 4:
+        switch(sentKey){
+          case 'a':
+            xc = xc-moveDistance;
+            break;
+          case 's':
+              yc = yc+moveDistance;
+            break;
+          case 'd':
+              xc = xc+moveDistance; 
+            break;
+          case 'w':
+            yc = yc-moveDistance;
+            break;
+          default:
+            break;
+        }
+        break;
+    default:
+        break;
+  }
+
+
+/*
     if (sentKey === 'a' && playerwho === '2') {
       xa += moveDistance*-1;
       console.log('image 1s x velocity is' + xa);
@@ -228,7 +273,7 @@ function readIncoming(inMessage) //when new data comes in it triggers this funct
     else {
       console.log('nope');
     }
-
+*/
 
       /* if(playerNum === '2'){
           xa = xv;
@@ -249,9 +294,10 @@ function readIncoming(inMessage) //when new data comes in it triggers this funct
           console.log('nope');
         }
       } */
-      
-  }
 //debug for seeing users join and leave
+
+}
+
 function presenceChange(pInfo){
   switch(pInfo.action){
     case 'join':
@@ -260,7 +306,7 @@ function presenceChange(pInfo){
       break;
     case 'leave':
       //find out how to convert pInfo.occupancy to int
-      console.log('user ' + pInfo.occupancy + ' + 1 has left');
+      console.log('user ' + (pInfo.occupancy + 1) +' has left');
       console.log('total number of people in the channel is ' + pInfo.occupancy);
       break;
     case 'timeout':
@@ -270,7 +316,6 @@ function presenceChange(pInfo){
       break;
   }
   totalPopulation = pInfo.occupancy;
-}
 }
 ///uses built in mouseClicked function to send the data to the pubnub server
 /*function sendTheMessage() {
