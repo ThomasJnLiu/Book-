@@ -39,8 +39,11 @@ let coord3;
 
 let moveDistance = 25; // how far to move per press
 
-let presenceChange //needed to get rid of an error....but if i un-comment it out, nothing works
-let playerwho;
+let leftWall; //0s
+let rightWall; //width
+
+
+//let presenceChange //needed to get rid of an error....but if i un-comment it out, nothing works
 
 let bg;
 
@@ -58,6 +61,9 @@ let x11; //img1's starting coords + x movement
 let y11; //img1's starting coords + y movement
 let x22; //img2's starting coords + x movement
 let y22; //img2's starting coords + y movement
+
+let playerWho; //hold inmessage.who
+let sentKey;
 
 let howfar = 15; //how close should images be before combining
 
@@ -79,14 +85,14 @@ function setup()
 {
   
   createCanvas(1400,700);
-  xa = 0;
-  ya = 0;
-  xb = 0;
-  yb = 0;
-  xc = 0;
-  yc = 0;
+  xa = moveDistance;
+  ya = moveDistance;
+  xb = moveDistance;
+  yb = moveDistance;
+  xc = moveDistance;
+  yc = moveDistance;
   
-  coord1 = createVector(0,0,0);
+  coord1 = createVector(width/2,height/2,0);
   coord2 = createVector(0,img2.height/2,0);
   coord3 = createVector(img2.width/2,0,0);
 
@@ -150,8 +156,8 @@ function draw()
 
   if(distance>howfar) { //if distance is less than accuracy, move*/
     image(img1,x11,y11);
-    image(img2,x22,y22); 
-    image(img3,x33,y33); 
+    //image(img2,x22,y22); 
+    //image(img3,x33,y33); 
   /*} else{ //if distance is less than accuracy, combine
     image(img3,(x11+x22)/2,(y11+y22)/2);
   }*/
@@ -163,71 +169,117 @@ function draw()
 
 function readIncoming(inMessage) //when new data comes in it triggers this function, 
 {                               // this works becsuse we subscribed to the channel in setup()
-  
+    playerWho = inMessage.message.player; //hold inmessage.who
+     sentKey = inMessage.message.pressedKey;
   //logs which player pressed which button for debug purposes
   console.log('player number ' + inMessage.message.player + ' pressed ' + inMessage.message.pressedKey);
   // simple error check to match the incoming to the channelName
   if(inMessage.channel == channelName)
   {
 
+    if (playerWho == 2) {
 
-  let playerNum = inMessage.message.player; //hold inmessage.who
-  let sentKey = inMessage.message.pressedKey;
+          if (sentKey === 'a')
+          { //go left if less than width
+            if(coord1.x >= 0+(img1.width/2))
+            {
+           coord1.x -= xa;
+            console.log('image 1s x position is' + coord1.x);
 
-    if (sentKey === 'a' && playerwho === '2') {
-      xa += moveDistance*-1;
-      console.log('image 1s x velocity is' + xa);
-    } else
-    if (sentKey === 'd' && playerwho === '2')  {
-      xa += moveDistance;
-      console.log('image 1s x velocity is' + xa);
-    } else
-    if (sentKey === 'w' && playerwho === '2')  {
-      ya += moveDistance*-1;
-      console.log('image 1s y velocity is' + ya);
-    } else
-    if (sentKey === 's' && playerwho === '2') {
-      ya += moveDistance;
-      console.log('image 1s y velocity is' + ya);
-    } else
+            }
+          }
 
-    if (sentKey === 'a' && playerwho === '3') {
-      xb += moveDistance*-1;
-      console.log('image 2s x velocity is' + xb);
-    } else
-    if (sentKey === 'd' && playerwho === '3')  {
-      xb += moveDistance;
-      console.log('image 2s x velocity is' + xb);
-    } else
-    if (sentKey === 'w' && playerwho === '3')  {
-      yb += moveDistance*-1;
-      console.log('image 2s y velocity is' + yb);
-    } else
-    if (sentKey === 's' && playerwho === '3') {
-      yb += moveDistance;
-      console.log('image 2s y velocity is' + yb);
-    } else
+           if (sentKey === 'd')
+           { //go right if greater than 0
+            
+            if(coord1.x <= width-(img1.width/2))
+            {
+           coord1.x += xa;
+            console.log('image 1s x position is' + coord1.x);
+            }
+           
+          }
 
-    if (sentKey === 'a' && playerwho === '4') {
-      xc += moveDistance*-1;
-      console.log('image 3s x velocity is' + xc);
-    } else
-    if (sentKey === 'd' && playerwho === '4')  {
-      xc += moveDistance;
-      console.log('image 3s x velocity is' + xc);
-    } else
-    if (sentKey === 'w' && playerwho === '4')  {
-      yc += moveDistance*-1;
-      console.log('image 3s y velocity is' + ycb);
-    } else
-    if (sentKey === 's' && playerwho === '4') {
-      yc += moveDistance;
-      console.log('image 3s y velocity is' + yc);
-    } 
+      if (sentKey === 'w')
+          { //go up if more than 0
+            if(coord1.y >= 0+(img1.height/2))
+            {
+           coord1.y -= ya;
+            console.log('image 1s y position is' + coord1.y);
 
-    else {
-      console.log('nope');
+            }
+          }
+
+           if (sentKey === 's')
+           { //go down if less than height
+            
+            if(coord1.y <= height-(img1.height/2))
+            {
+           coord1.y += ya;
+            console.log('image 1s y position is' + coord1.y);
+            }
+           
+          }
+         }
+
+
+      //stop from going out of bounds
+      /*if (coord1.x > width){ //if x value is greater than canvas width
+        coord1.x = width; //move x back to canvas width
+      }
+      if (coord1.x < 0){//if x value is less than 0
+        coord1.x = 0; //move x back to 0
+      }
+      if (coord1.y > height){ //if y value is greater than canvas height
+        coord1.y = height; //move y back to canvas height
+      }
+      if (coord1.y < 0){//if y value is less than 0
+        coord1.y = 0; //move y back to 0
+      }*/
     }
+
+
+    if (playerWho == 3) {
+      if (sentKey === 'a'){
+        xb += moveDistance*-1;
+        console.log('image 2s x velocity is' + xb);
+      }
+      if (sentKey === ' d'){
+        xb += moveDistance;
+        console.log('image 2s x velocity is' + xb);
+
+      }
+      if (sentKey === 'w'){
+        yb += moveDistance*-1;
+        console.log('image 2s y velocity is' + yb);
+      }
+      if (sentKey === 's'){
+        yb += moveDistance;
+        console.log('image 2s y velocity is' + yb);
+      }
+    }
+
+    if (playerWho == 4) {
+
+      if (sentKey === 'a'){
+        xc += moveDistance*-1;
+        console.log('image 3s x velocity is' + xc);
+      }
+      if (sentKey === ' d'){
+        xc += moveDistance;
+        console.log('image 3s x velocity is' + xc);
+
+      }
+      if (sentKey === 'w'){
+        yc += moveDistance*-1;
+        console.log('image 3s y velocity is' + yc);
+      }
+      if (sentKey === 's'){
+        yc += moveDistance;
+        console.log('image 3s y velocity is' + yc);
+      }
+    }
+
 
 
       /* if(playerNum === '2'){
@@ -249,8 +301,8 @@ function readIncoming(inMessage) //when new data comes in it triggers this funct
           console.log('nope');
         }
       } */
-      
-  }
+  }    
+  
 //debug for seeing users join and leave
 function presenceChange(pInfo){
   switch(pInfo.action){
@@ -271,7 +323,7 @@ function presenceChange(pInfo){
   }
   totalPopulation = pInfo.occupancy;
 }
-}
+
 ///uses built in mouseClicked function to send the data to the pubnub server
 /*function sendTheMessage() {
  
