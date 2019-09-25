@@ -9,8 +9,8 @@ slide 2 images around and then combine once they're close enough to each other
 //within your group, you will use 1 of your accounts for the project
 
 let dataServer;
-let pubKey = 'pub-c-73ed22b4-0625-47d8-8e2a-baa53b5d0f2e';
-let subKey = 'sub-c-4b2eb5a6-d5af-11e9-87c7-92ba2ff8bd78';
+let pubKey = 'pub-c-805c3b5f-556c-445d-a31a-212349dfe307';
+let subKey = 'sub-c-9587a9fa-d5af-11e9-9fd1-52d10f2427f8';
 
 //input variables
 let sendText;
@@ -88,7 +88,7 @@ function setup()
   coord1 = createVector(0,0,0);
   coord2 = createVector(0,img2.height/2,0);
   coord3 = createVector(img2.width/2,0,0);
-
+x
   
   imageMode(CENTER);
 
