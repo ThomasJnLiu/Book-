@@ -63,6 +63,7 @@ function preload() {
   img1 = loadImage('https://i.imgur.com/ulG65nN.png');
   img2 = loadImage('https://i.imgur.com/tLWJ6X2.png');
   img3 = loadImage('https://i.imgur.com/tUkk790.png');
+  imgBg = loadImage('https://i.imgur.com/wmpWnbb.png');
 
   /*
   img1 = loadImage('../images/1.png'); //toilet
@@ -122,7 +123,7 @@ function setup()
 
 function draw() 
 {
-  background(255);
+  background(0);
 
    x11 = coord1.x+xa; //img1's starting coords + x movement
    y11 = coord1.y+ya; //img1's starting coords + y movement
@@ -130,6 +131,7 @@ function draw()
    y22 = coord2.y+yb; //img2's starting coords + y movement
    x33 = coord3.x+xc; //img2's starting coords + x movement
    y33 = coord3.y+yc; //img2's starting coords + y movement
+  image(imgBg, 700, 350);
   image(img1,x11,y11); 
   image(img2,x22,y22); 
   image(img3,x33,y33); 
