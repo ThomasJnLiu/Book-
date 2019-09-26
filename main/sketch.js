@@ -88,7 +88,7 @@ function setup()
   coord1 = createVector(0,0,0);
   coord2 = createVector(0,img2.height/2,0);
   coord3 = createVector(img2.width/2,0,0);
-x
+
   
   imageMode(CENTER);
 
