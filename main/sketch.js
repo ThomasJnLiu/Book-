@@ -78,7 +78,6 @@ function draw()
 {
   background(0);
 
-
    x11 = coord1.x+xa; //img1's starting coords + x movement
    y11 = coord1.y+ya; //img1's starting coords + y movement
    x22 = coord2.x+xb; //img2's starting coords + x movement
@@ -91,15 +90,14 @@ function draw()
   image(img3,x33,y33); 
 }
 
-function readIncoming(inMessage){ //when new data comes in it triggers this function, 
-                              // this works becsuse we subscribed to the channel in setup()
-  
+function readIncoming(inMessage){
   //logs which player pressed which button for debug purposes
   console.log('player number ' + inMessage.message.player + ' pressed ' + inMessage.message.pressedKey);
 
   let playerNum = inMessage.message.player;
   let sentKey = inMessage.message.pressedKey;
 
+  //checks which player pressed which key in order to move corresponding sprite
   switch(playerNum){
     case 2:
       switch(sentKey){

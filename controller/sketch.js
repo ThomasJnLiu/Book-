@@ -36,7 +36,7 @@ function setup(){
   
   createCanvas(1400,700);
 
-   // initialize pubnub
+  // initialize pubnub
   dataServer = new PubNub({
     publish_key   : pubKey,  
     subscribe_key : subKey,  
@@ -84,56 +84,6 @@ function presenceChange(pInfo){
       console.log('user number is ' + playerNum);
     }
 }
-
-function readIncoming(inMessage) //when new data comes in it triggers this function, 
-{                               // this works becsuse we subscribed to the channel in setup()
-  /*
-  //logs which player pressed which button for debug purposes
-  console.log('player number ' + inMessage.message.player + ' pressed ' + inMessage.message.pressedKey);
-  // simple error check to match the incoming to the channelName
-  if(inMessage.channel == channelName)
-  {
-
-
-  let playerwho = inMessage.message.player; //hold inmessage.who
-  let sentKey = inMessage.message.messageText;
-
-     if (sentKey === 'a') {
-      xv += moveDistance*-1;
-    } else
-    if (sentKey === 'd')  {
-      xv += moveDistance;
-    } else
-    if (sentKey === 'w')  {
-      yv += moveDistance*-1;
-    } else
-    if (sentKey === 's') {
-      yv += moveDistance;
-    } 
-
-      if(playerNum === '2'){
-          xa = xv;
-          ya = yv;
-          console.log('image 1s x velocity is' + xa);
-          console.log('image 1s y velocity is' + ya);
-        } else if (playerNum === '3'){
-          xb = xv;
-          yb = yv;
-          console.log('image 2s x velocity is' + xb);
-          console.log('image 2s y velocity is' + yb);
-        } else if (playerNum === '4'){
-          xc = xv;
-          yc = yv;
-          console.log('image 3s x velocity is' + xc);
-          console.log('image 3s y velocity is' + yc);
-        } else {
-          console.log('nope');
-        }
-      }
-      */
-  }
-
-
 
 //unsub to channel if button clicked
 $('document').ready(function(){
